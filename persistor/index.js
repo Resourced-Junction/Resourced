@@ -43,5 +43,9 @@ const subscription = await streamrClient.subscribe(
 );
 
 setInterval(async () => {
-  await client.publish(process.env.STREAM, { data: resources });
-}, 100);
+  try {
+    await streamrClient.publish(STREAM_ID, { data: resources });
+  } catch (error) {
+    console.error(error);
+  }
+}, 1000);
