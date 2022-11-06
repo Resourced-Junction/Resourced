@@ -9,6 +9,10 @@ let resources = [];
 // Read resources from json file
 const resourceFile = "./resources.json";
 readFile(resourceFile, (err, data) => {
+  if (err) {
+    return;
+  }
+
   resources = JSON.parse(data);
 });
 
