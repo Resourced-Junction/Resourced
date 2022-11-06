@@ -18,3 +18,11 @@ Messages will have the following structure with a variable count of data element
   ]
 }
 ```
+
+# ROADMAP
+
+what are the next steps for the persistor
+
+## Authentication
+	the publihser authenticate inside the GUN 
+
