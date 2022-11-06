@@ -131,3 +131,6 @@ dist
 
 # gun folder
 radata
+
+# Resources save
+resources.json
