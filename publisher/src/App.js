@@ -48,10 +48,3 @@ function App() {
 }
 
 export default App;
-
-/*
-          console.log(test);
-          const decriptTest = CryptoJs.AES.decrypt(test, "test");
-
-          console.log(decriptTest.toString(CryptoJs.enc.Utf8));
-*/
