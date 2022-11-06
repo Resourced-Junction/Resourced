@@ -19,28 +19,27 @@ const streamrClient = new StreamrClient({
 });
 
 function addResourceIfNotExists(newResource) {
-  if (!resources.find(resource => resource.address === newResource.address)) {
+  if (!resources.find((resource) => resource.address === newResource.address)) {
+    console.log("New resource:", newResource);
+
     resources.push(newResource);
   }
 }
 
 function saveResources() {
   writeFile(resourceFile, JSON.stringify(resources), (err) => {
-    if(err) console.error(err);
+    if (err) console.error(err);
   });
 }
 
 // Subscribe to a stream
-streamrClient.subscribe(
-  STREAM_ID,
-  (message) => {
-    // This function will be called when new messages occur
-    message.data.forEach((publishedResource) => {
-      addResourceIfNotExists(publishedResource);
-    });
-    saveResources();
-  }
-);
+streamrClient.subscribe(STREAM_ID, (message) => {
+  // This function will be called when new messages occur
+  message.data.forEach((publishedResource) => {
+    addResourceIfNotExists(publishedResource);
+  });
+  saveResources();
+});
 
 setInterval(async () => {
   try {
