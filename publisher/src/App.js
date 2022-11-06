@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import "./App.css";
 import Gun from "gun";
 import StreamrClient from "streamr-client";
+import CryptoJs from "crypto-js";
 
 const gun = Gun([
   "http://localhost:8765/gun",
@@ -14,8 +15,7 @@ function App() {
   const [db] = useState(gun.get("junction").get("test"));
   const streamr = new StreamrClient({
     auth: {
-      privateKey:
-        "6ae11887b579787ca910023ffcce549a52eae1bd9a4744a0911ed68dcd648478",
+      ethereum: window.ethereum,
     },
   });
 
@@ -27,11 +27,16 @@ function App() {
           const randomString = (Math.random() + 1).toString(36).substring(7);
           const newEntry = db.get(randomString);
           console.log(randomString);
-          newEntry.put(ref.current.value);
+          const key = (Math.random() + 1).toString(36).substring(7);
+          const encrypted = CryptoJs.AES.encrypt(
+            ref.current.value,
+            key
+          ).toString();
+          newEntry.put(encrypted);
           streamr.publish(
             "0xbf259938539458f01d224d09c29d30babc701709/resourced",
             {
-              data: [{ address: randomString, key: "" }],
+              data: [{ address: randomString, key: key }],
             }
           );
         }}
@@ -43,3 +48,10 @@ function App() {
 }
 
 export default App;
+
+/*
+          console.log(test);
+          const decriptTest = CryptoJs.AES.decrypt(test, "test");
+
+          console.log(decriptTest.toString(CryptoJs.enc.Utf8));
+*/
