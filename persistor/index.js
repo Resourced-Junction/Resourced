@@ -26,7 +26,7 @@ function addResourceIfNotExists(newResource) {
 
 function saveResources() {
   writeFile(resourceFile, JSON.stringify(resources), (err) => {
-    console.error(err);
+    if(err) console.error(err);
   });
 }
 
